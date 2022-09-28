@@ -1,23 +1,33 @@
-import logo from './logo.svg';
 import './App.css';
+import Seat from './components/Seat/Seat';
+import TicketBox from './components/TicketBox';
 
 function App() {
+  const arr = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9],
+  ];
+
+  const result = arr.map((items, index) => {
+    return (
+      <div key={index} style={{ display: 'flex', justifyContent: 'center' }}>
+        {items.map((subItems, subIndex) => {
+          return (
+            <Seat
+              key={subIndex}
+              subItems={subItems}
+              style={{ padding: '30px' }}
+            />
+          );
+        })}
+      </div>
+    );
+  });
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <TicketBox />
     </div>
   );
 }

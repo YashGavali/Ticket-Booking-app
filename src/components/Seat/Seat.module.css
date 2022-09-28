@@ -1,0 +1,12 @@
+.seatContainerUnselect{
+    background-color: blue;
+    width: 40px;
+    height:40px;
+    margin:5px
+}
+.seatContainerSelect{
+    background-color: red;
+    width: 40px;
+    height:40px;
+    margin:5px
+}
