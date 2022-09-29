@@ -3,6 +3,8 @@ import { useEffect } from 'react';
 import { useStore } from '../../store/seatStore';
 import Singleseat from '../Singleseat';
 import { Container, Grid, ButtonGroup, Button } from '@mui/material';
+import { initialTime, defaultData } from '../defaultData';
+
 const TicketBooker = () => {
   const defaultData = [
     {
@@ -70,7 +72,7 @@ const TicketBooker = () => {
   console.log(seatData);
   useEffect(() => {
     let intervalId = setInterval(() => {
-      setTimer(60); //setTimer((prev)=>prev-1)
+      setTimer(initialTime); //setTimer((prev)=>prev-1)
     }, 1000);
 
     return () => {

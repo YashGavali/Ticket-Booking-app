@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useStore } from '../store/seatStore';
-
+import { Container, Grid, ButtonGroup, Button, Card } from '@mui/material';
+import { CardHeader } from '@mui/material';
+import Cards from './Cards';
 const Checkout = () => {
   const defaultData = [
     {
@@ -63,9 +65,9 @@ const Checkout = () => {
   const timer = useStore((state) => state.timer);
   const setTimer = useStore((state) => state.setTimer);
   const seatStatusUpdated = useStore((state) => state.seatStatusUpdated);
+  const defaultD = useStore((state) => state.defaultData);
   const [filter, setFilter] = useState([]);
   const [summarizedData, setSummarizedData] = useState('list is empty');
-
   useEffect(() => {
     let intervalId = setInterval(() => {
       setTimer(timer); //setTimer((prev)=>prev-1)
@@ -74,11 +76,11 @@ const Checkout = () => {
     return () => {
       clearInterval(intervalId);
     };
-  }, []);
+  });
 
   useEffect(() => {
     if (timer.time === 0) {
-      seatStatusUpdated(defaultData);
+      seatStatusUpdated([...defaultData]);
       //   resetSeatData(seatData);
     }
   }, [timer]);
@@ -89,17 +91,66 @@ const Checkout = () => {
   }, [seatData]);
 
   const setFilterData = () => {
-    console.log(filter);
     const summarizedData = filter.map((ele, index) => {
-      return <div key={ele.id}>{`${ele.name} : ${ele.price}`}</div>;
+      return <Cards key={ele.id} cardData={ele} />;
     });
     return summarizedData;
   };
   return (
-    <div>
-      {filter.length != 0 ? setFilterData() : 'empty'}
-
-      <div>{timer.time}</div>
+    <div
+      style={{
+        // position: 'relative',
+        display: 'flex',
+        justifyContent: 'center',
+        backgroundColor: 'white',
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-beetween',
+          //   position: 'absolute',
+          top: '40px',
+          backgroundColor: '#DFF6FF',
+          width: '500px',
+          minHeight: '100%',
+          boxShadow: ' 0px 10px 22px -3px rgba(0,0,0,1)',
+          borderRadius: '10px',
+        }}
+      >
+        <h3
+          style={{ fontWeight: '700', fontSize: '20px', textAlign: 'center' }}
+        >
+          Ticket Summary
+        </h3>
+        {filter.length != 0 ? (
+          setFilterData()
+        ) : (
+          <div
+            style={{
+              color: 'red',
+              paddingLeft: '20px',
+              lineHeight: '50px',
+              fontWeight: '700',
+              fontSize: '20px',
+              margin: '50px',
+            }}
+          >
+            No tickets selected
+          </div>
+        )}
+        <div
+          style={{
+            background: 'white',
+            margin: '10px',
+            borderRadius: '5px',
+            padding: '15px',
+          }}
+        >
+          Total price
+        </div>
+      </div>
     </div>
   );
 };
