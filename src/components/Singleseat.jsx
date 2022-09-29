@@ -5,7 +5,6 @@ const Singleseat = ({ element, seatClickHandler }) => {
   return (
     <div>
       <Button
-        style={{}}
         color={isSelected ? 'success' : 'error'}
         variant="contained"
         onClick={() => {
