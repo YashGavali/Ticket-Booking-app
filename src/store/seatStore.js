@@ -101,11 +101,11 @@ export const useStore = create((set) => ({
 
   resetSeatData: (currSeatdata) => {
     let current = currSeatdata.map((ele) => {
-      return { ele };
+      return (ele.isSelected = true);
     });
-    console.log('current is ', current);
-    return set((state) => ({
-      seatData: [...current],
-    }));
+    // console.log('current is ', current);
+    // return set((state) => ({
+    //   seatData: [...current],
+    // }));
   },
 }));

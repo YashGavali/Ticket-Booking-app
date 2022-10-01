@@ -83,7 +83,7 @@ const TicketBooker = () => {
   useEffect(() => {
     if (timer.time === 0) {
       seatStatusUpdated(defaultData);
-      //   resetSeatData(seatData);
+      //   resetSeatData([...defaultData]);
     }
   }, [timer]);
   const seatClickHandler = (id) => {
@@ -133,10 +133,16 @@ const TicketBooker = () => {
         >
           <Button color={timer.time < 10 ? 'error' : 'primary'}>{`${Math.floor(
             timer.time / 60
-          )}`}</Button>
-          <Button color={timer.time < 10 ? 'error' : 'primary'}>{`${
+          ).toLocaleString('en-US', {
+            minimumIntegerDigits: 2,
+            useGrouping: false,
+          })}`}</Button>
+          <Button color={timer.time < 10 ? 'error' : 'primary'}>{`${(
             timer.time % 60
-          }`}</Button>
+          ).toLocaleString('en-US', {
+            minimumIntegerDigits: 2,
+            useGrouping: false,
+          })}`}</Button>
         </ButtonGroup>
       </Container>
     </div>

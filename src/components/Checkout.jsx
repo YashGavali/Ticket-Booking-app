@@ -102,7 +102,7 @@ const Checkout = () => {
         // position: 'relative',
         display: 'flex',
         justifyContent: 'center',
-        backgroundColor: 'white',
+        backgroundColor: '#16213E',
       }}
     >
       <div
@@ -142,13 +142,17 @@ const Checkout = () => {
         )}
         <div
           style={{
-            background: 'white',
+            display: 'flex',
+            justifyContent: 'space-between',
+            color: 'white',
+            background: '#16213E',
             margin: '10px',
             borderRadius: '5px',
             padding: '15px',
           }}
         >
-          Total price
+          <div>total</div>
+          <div>Rs 50000</div>
         </div>
       </div>
     </div>
