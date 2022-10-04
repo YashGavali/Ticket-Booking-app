@@ -2,8 +2,9 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useStore } from '../../store/seatStore';
 import Singleseat from '../Singleseat';
-import { Container, Grid, ButtonGroup, Button } from '@mui/material';
-import { initialTime, defaultData } from '../defaultData';
+import { Container, Grid } from '@mui/material';
+import { initialTime } from '../defaultData';
+import CountDownTimer from '../CountDownTimer';
 
 const TicketBooker = () => {
   const defaultData = [
@@ -68,8 +69,7 @@ const TicketBooker = () => {
   const seatStatusUpdated = useStore((state) => state.seatStatusUpdated);
   const setDisplayTimer = useStore((state) => state.setDisplayTimer);
   const resetTimer = useStore((state) => state.resetTimer);
-  const resetSeatData = useStore((state) => state.resetSeatData);
-  console.log(seatData);
+
   useEffect(() => {
     let intervalId = setInterval(() => {
       setTimer(initialTime); //setTimer((prev)=>prev-1)
@@ -78,7 +78,7 @@ const TicketBooker = () => {
     return () => {
       clearInterval(intervalId);
     };
-  }, []);
+  });
 
   useEffect(() => {
     if (timer.time === 0) {
@@ -86,6 +86,7 @@ const TicketBooker = () => {
       //   resetSeatData([...defaultData]);
     }
   }, [timer]);
+
   const seatClickHandler = (id) => {
     const list = [...seatData];
     const itemIndex = list.findIndex((ele) => ele.id === id);
@@ -107,44 +108,32 @@ const TicketBooker = () => {
     );
   });
 
+  const isTimerDisplayed = false || (timer.time !== 0 && <CountDownTimer />);
+
   return (
-    <div style={{ perspective: '800px' }}>
-      <div
-        style={{
-          backgroundColor: 'white',
-          width: '500px',
-          margin: '0 auto',
-          padding: '80px 0',
-          transform: 'rotateX(-45deg)',
-          boxShadow: '0 3px 10px rgba(255,255,255,0.75)',
-        }}
-      ></div>
-      <div style={{ paddingTop: '80px' }}>
-        <Container style={{ width: '300px' }}>
-          <Grid container spacing={3}>
-            {ticketStatus}
-          </Grid>
-        </Container>
+    <div>
+      <div style={{ perspective: '800px' }}>
+        <div
+          style={{
+            backgroundColor: 'white',
+            width: '500px',
+            margin: '0 auto',
+            padding: '80px 0',
+            transform: 'rotateX(-45deg)',
+            boxShadow: '0 3px 10px rgba(255,255,255,0.75)',
+          }}
+        ></div>
+        <div style={{ paddingTop: '80px' }}>
+          <Container style={{ width: '300px' }}>
+            <Grid container spacing={3}>
+              {ticketStatus}
+            </Grid>
+          </Container>
+        </div>
       </div>
-      <Container>
-        <ButtonGroup
-          variant="contained"
-          aria-label="outlined primary button group"
-        >
-          <Button color={timer.time < 10 ? 'error' : 'primary'}>{`${Math.floor(
-            timer.time / 60
-          ).toLocaleString('en-US', {
-            minimumIntegerDigits: 2,
-            useGrouping: false,
-          })}`}</Button>
-          <Button color={timer.time < 10 ? 'error' : 'primary'}>{`${(
-            timer.time % 60
-          ).toLocaleString('en-US', {
-            minimumIntegerDigits: 2,
-            useGrouping: false,
-          })}`}</Button>
-        </ButtonGroup>
-      </Container>
+
+      {timer.displayTimer && isTimerDisplayed}
+      {/* {timer.time !== 0 && <CountDownTimer />} */}
     </div>
   );
 };

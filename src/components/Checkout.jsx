@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useStore } from '../store/seatStore';
-import { Container, Grid, ButtonGroup, Button, Card } from '@mui/material';
-import { CardHeader } from '@mui/material';
 import Cards from './Cards';
+import CountDownTimer from './CountDownTimer';
 const Checkout = () => {
   const defaultData = [
     {
@@ -65,9 +64,8 @@ const Checkout = () => {
   const timer = useStore((state) => state.timer);
   const setTimer = useStore((state) => state.setTimer);
   const seatStatusUpdated = useStore((state) => state.seatStatusUpdated);
-  const defaultD = useStore((state) => state.defaultData);
   const [filter, setFilter] = useState([]);
-  const [summarizedData, setSummarizedData] = useState('list is empty');
+  // const [totalPrice,setTotalPrice] = useData(0)
   useEffect(() => {
     let intervalId = setInterval(() => {
       setTimer(timer); //setTimer((prev)=>prev-1)
@@ -86,7 +84,7 @@ const Checkout = () => {
   }, [timer]);
 
   useEffect(() => {
-    let filteredSeats = seatData.filter((ele) => ele.isSelected == true);
+    let filteredSeats = seatData.filter((ele) => ele.isSelected === true);
     setFilter(filteredSeats);
   }, [seatData]);
 
@@ -96,6 +94,13 @@ const Checkout = () => {
     });
     return summarizedData;
   };
+
+  let totalPrice =
+    0 ||
+    filter.reduce((acc, current) => {
+      return acc + current.price;
+    }, 0);
+
   return (
     <div
       style={{
@@ -124,13 +129,14 @@ const Checkout = () => {
         >
           Ticket Summary
         </h3>
-        {filter.length != 0 ? (
+        {filter.length !== 0 ? (
           setFilterData()
         ) : (
           <div
             style={{
+              textAlign: 'center',
               color: 'red',
-              paddingLeft: '20px',
+              // paddingLeft: '20px',
               lineHeight: '50px',
               fontWeight: '700',
               fontSize: '20px',
@@ -152,9 +158,10 @@ const Checkout = () => {
           }}
         >
           <div>total</div>
-          <div>Rs 50000</div>
+          <div>{`Rs ${totalPrice}`}</div>
         </div>
       </div>
+      {timer.time !== 0 && <CountDownTimer />}
     </div>
   );
 };

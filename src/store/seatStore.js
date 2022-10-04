@@ -98,14 +98,17 @@ export const useStore = create((set) => ({
       },
     }));
   },
+  resetDisplayTimer: () =>
+    set((state) => ({
+      timer: {
+        ...state.timer,
+        displayTimer: false,
+      },
+    })),
 
-  resetSeatData: (currSeatdata) => {
-    let current = currSeatdata.map((ele) => {
-      return (ele.isSelected = true);
-    });
-    // console.log('current is ', current);
-    // return set((state) => ({
-    //   seatData: [...current],
-    // }));
-  },
+  //   resetSeatData: (currSeatdata) => {
+  //     let current = currSeatdata.map((ele) => {
+  //       return (ele.isSelected = true);
+  //     });
+  //   },
 }));
