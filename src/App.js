@@ -10,6 +10,7 @@ function App() {
       <Navigation />
       <div style={{ marginTop: '40px' }}>
         <Routes>
+          <Route path="/Ticket-Booking-app" element={<TicketBooker />} />
           <Route path="/" element={<TicketBooker />} />
           <Route path="/checkout" element={<Checkout />} />
         </Routes>
